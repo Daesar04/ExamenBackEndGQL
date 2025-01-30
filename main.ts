@@ -7,7 +7,8 @@ import { resolvers } from "./resolvers.ts";
 
 const MONGO_URL = Deno.env.get("MONGO_URL");
 
-if (!MONGO_URL) {
+if (!MONGO_URL)
+{
   throw new Error("Please provide a MONGO_URL");
 }
 
