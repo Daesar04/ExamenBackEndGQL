@@ -14,13 +14,9 @@ export const validarTelefono = async (
     const response:API_PHONE = await data.json();
 
     if(response.is_valid)
-    {
         return response;
-    }
     else
-    {
         throw new GraphQLError("El teléfono no es válido.");
-    }
 }
 
 export const temperatura = async (
