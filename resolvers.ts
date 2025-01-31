@@ -40,6 +40,8 @@ export const resolvers = {
             if(existeTelefonoDB)
                 throw new GraphQLError("Ya existe ese teléfono.")
 
+            await verCiudad(ciudad); //Si la ciudad no existe en la API salta error de undefined, con esto lo evito
+
             const { insertedId } = await ctx.restauranteCollections.insertOne({
                 nombre: nombre,
                 direccion: direccion,

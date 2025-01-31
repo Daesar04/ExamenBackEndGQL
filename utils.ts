@@ -47,6 +47,9 @@ export const verCiudad = async (
 
     const response = await data.json();
 
+    if(response[0] === undefined)
+        throw new GraphQLError("La respuesta de la API es undefined.");
+
     const datosCiudad:API_CITY = {
         latitude: response[0].latitude,
         longitude: response[0].longitude
