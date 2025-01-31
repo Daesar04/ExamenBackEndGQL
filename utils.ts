@@ -1,5 +1,5 @@
 import { GraphQLError } from "graphql";
-import { API_CITY, API_PHONE } from "./types.ts";
+import { API_CITY, API_PHONE, API_TIME } from "./types.ts";
 
 export const validarTelefono = async (
     telefono: string
@@ -23,7 +23,7 @@ export const validarTelefono = async (
     }
 }
 
-export const temeperatura = async (
+export const temperatura = async (
     latitude: number,
     longitude: number
 ): Promise<number> => {
@@ -57,4 +57,20 @@ export const verCiudad = async (
     }
 
     return datosCiudad;
+}
+
+export const horaActual = async (
+    latitude: number,
+    longitude: number
+): Promise<string> => {
+    const API_KEY = Deno.env.get("API_KEY");
+    const url = `https://api.api-ninjas.com/v1/worldtime?lat=${latitude}&lon=${longitude}`;
+    const data = await fetch(url, { headers: {'X-Api-Key': API_KEY} });
+
+    if(data.status !== 200)
+        throw new GraphQLError("Error al hacer el fetch.");
+
+    const response:API_TIME = await data.json();
+
+    return `${response.hour}:${response.minute}`;
 }

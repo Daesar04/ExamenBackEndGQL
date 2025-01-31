@@ -16,3 +16,8 @@ export type API_CITY = {
     latitude: number,
     longitude: number
 }
+
+export type API_TIME = {
+    hour: string,
+    minute: string
+}

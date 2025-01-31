@@ -1,6 +1,6 @@
 import { Collection, ObjectId } from "mongodb";
 import { restauranteModel } from "./types.ts";
-import { validarTelefono } from "./utils.ts";
+import { temperatura, validarTelefono, verCiudad, horaActual } from "./utils.ts";
 
 type Context = {
     restauranteCollections: Collection<restauranteModel>
@@ -28,8 +28,15 @@ export const resolvers = {
             const datos = await validarTelefono(parent.telefono);
             return `${parent.direccion}, ${parent.ciudad}, ${datos.country}`;
         },
-        temperatura: (parent: restauranteModel) => {
-            
+        temperatura: async (parent: restauranteModel) => {
+            const ciudad = await verCiudad(parent.ciudad);
+            const temp = await temperatura(ciudad.latitude, ciudad.longitude);
+            return temp;
+        },
+        hora: async (parent: restauranteModel) => {
+            const ciudad = await verCiudad(parent.ciudad);
+            const horaA = await horaActual(ciudad.latitude, ciudad.longitude);
+            return horaA;
         }
     }
 }
